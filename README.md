@@ -200,8 +200,8 @@ State Management • Form Handling • Routing • Frontend Architecture • Dat
 **Asma Channa**  
 Front-End Developer | React Enthusiast
 
-📧 Email: asmachanna.becsef22@iba-suk.edu.pk 
-🔗 LinkedIn: https://linkedin.com/in/iasmachanna  
+📧 Email: asmachanna.becsef22@iba-suk.edu.pk <br>
+🔗 LinkedIn: https://linkedin.com/in/iasmachanna  <br>
 🐙 GitHub: https://github.com/asma-13
 
 ---
