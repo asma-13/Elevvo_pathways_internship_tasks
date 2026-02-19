@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard - Real-Time Weather Updates</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header>
+            <!-- Floating Weather Icons -->
+            <div class="floating-icons">
+                <span class="float-icon icon-1">☀️</span>
+                <span class="float-icon icon-2">☁️</span>
+                <span class="float-icon icon-3">🌧️</span>
+                <span class="float-icon icon-4">❄️</span>
+                <span class="float-icon icon-5">⛅</span>
+                <span class="float-icon icon-6">🌈</span>
+            </div>
+
+            <div class="header-content">
+                <h1>
+                    <span class="icon-weather">🌤️</span>
+                    Weather Dashboard
+                </h1>
+                <p class="subtitle">Real-time weather updates with advanced forecasting</p>
+            </div>
+        </header>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-bar">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    <input type="text" id="cityInput" placeholder="Search for a city..." autocomplete="off">
+                    <button id="searchBtn" class="btn btn-search">
+                        <span>Search</span>
+                    </button>
+                </div>
+                <button id="locationBtn" class="btn btn-location">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                        <circle cx="12" cy="10" r="3"></circle>
+                    </svg>
+                    <span>My Location</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div id="loadingSpinner" class="loading-spinner hidden">
+            <div class="spinner-container">
+                <div class="spinner"></div>
+                <div class="spinner-glow"></div>
+            </div>
+            <p>Fetching weather data...</p>
+        </div>
+
+        <!-- Error Message -->
+        <div id="errorMessage" class="error-message hidden">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <p></p>
+        </div>
+
+        <!-- Current Weather Section -->
+        <div id="currentWeather" class="current-weather hidden">
+            <div class="weather-card main-card">
+                <div class="weather-header">
+                    <div class="location-info">
+                        <h2 id="cityName">--</h2>
+                        <p id="currentDate">--</p>
+                    </div>
+                    <div class="weather-icon-container">
+                        <img id="weatherIcon" src="" alt="Weather icon" class="weather-icon-large">
+                    </div>
+                </div>
+
+                <div class="weather-body">
+                    <div class="temperature-section">
+                        <div class="temp-display">
+                            <h1 id="temperature">--°</h1>
+                            <div class="temp-unit-toggle">
+                                <button class="unit-btn active" data-unit="C">°C</button>
+                                <button class="unit-btn" data-unit="F">°F</button>
+                            </div>
+                        </div>
+                        <p id="weatherDescription" class="weather-desc">--</p>
+                        <div class="temp-range">
+                            <span class="temp-high">H: <span id="tempHigh">--°</span></span>
+                            <span class="temp-divider">|</span>
+                            <span class="temp-low">L: <span id="tempLow">--°</span></span>
+                        </div>
+                    </div>
+
+                    <div class="weather-details">
+                        <div class="detail-item">
+                            <div class="detail-icon">💧</div>
+                            <div class="detail-content">
+                                <span class="detail-label">Humidity</span>
+                                <span id="humidity" class="detail-value">--%</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">💨</div>
+                            <div class="detail-content">
+                                <span class="detail-label">Wind Speed</span>
+                                <span id="windSpeed" class="detail-value">-- km/h</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">🌡️</div>
+                            <div class="detail-content">
+                                <span class="detail-label">Feels Like</span>
+                                <span id="feelsLike" class="detail-value">--°</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">🔽</div>
+                            <div class="detail-content">
+                                <span class="detail-label">Pressure</span>
+                                <span id="pressure" class="detail-value">-- hPa</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">👁️</div>
+                            <div class="detail-content">
+                                <span class="detail-label">Visibility</span>
+                                <span id="visibility" class="detail-value">-- km</span>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-icon">☁️</div>
+                            <div class="detail-content">
+                                <span class="detail-label">Cloudiness</span>
+                                <span id="cloudiness" class="detail-value">--%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sun Times -->
+                <div class="sun-times">
+                    <div class="sun-time-item">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                        </svg>
+                        <div>
+                            <span class="sun-label">Sunrise</span>
+                            <span id="sunrise" class="sun-value">--:--</span>
+                        </div>
+                    </div>
+                    <div class="sun-time-item">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M17 18a5 5 0 0 0-10 0"></path>
+                            <line x1="12" y1="2" x2="12" y2="9"></line>
+                            <line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line>
+                            <line x1="1" y1="18" x2="3" y2="18"></line>
+                            <line x1="21" y1="18" x2="23" y2="18"></line>
+                            <line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line>
+                        </svg>
+                        <div>
+                            <span class="sun-label">Sunset</span>
+                            <span id="sunset" class="sun-value">--:--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3-Day Forecast Section -->
+        <div id="forecastSection" class="forecast-section hidden">
+            <div class="section-header">
+                <h3 class="section-title">3-Day Forecast</h3>
+                <div class="section-subtitle">Extended weather outlook</div>
+            </div>
+            <div id="forecastGrid" class="forecast-grid">
+                <!-- Forecast cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Powered by <a href="https://www.linkedin.com/in/iasmachanna/" target="_blank" rel="noopener">"Asma
+                Channa"</a></p>
+        <p class="footer-note">Data updates in real-time</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
